@@ -1,0 +1,79 @@
+<!-- comment-section.component.html -->
+<div class="comments-section">
+  <h3 class="comments-title">
+    Комментарии
+    <span class="comment-count">({{ comments().length }})</span>
+  </h3>
+
+  <div class="comments-container">
+    @if (isLoading()) {
+      <div class="loading-spinner">
+        <mat-spinner diameter="24"></mat-spinner>
+      </div>
+    } @else if (error()) {
+      <div class="error-message">
+        {{ error() }}
+      </div>
+    } @else {
+      @for (comment of comments(); track comment.id) {
+        <div class="comment">
+          <div class="comment-header">
+            <div class="comment-avatar">
+              <img 
+                [src]="getAvatarUrl(comment.user.userId)" 
+                alt="User avatar"
+                class="comment-avatar-img"
+                (click)="userSelected.emit(comment.user)">
+            </div>
+            <div class="comment-author" (click)="userSelected.emit(comment.user)">
+              {{comment.user.nickname}}
+            </div>
+            <div class="comment-date">{{comment.createdAt | date:'medium'}}</div>
+          </div>
+          <div class="comment-content">
+            <p>{{comment.text}}</p>
+            @if (isCommentAuthor(comment)) {
+              <div class="comment-actions">
+                <button mat-icon-button (click)="toggleEditComment(comment)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteComment(comment)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
+            @if (isEditingComment(comment)) {
+              <div class="edit-form">
+                <textarea [(ngModel)]="editCommentText" rows="2" placeholder="Edit your comment..."></textarea>
+                <div class="edit-actions">
+                  <button mat-button (click)="cancelEditComment()">Cancel</button>
+                  <button mat-raised-button color="primary" (click)="saveEditComment(comment)">Save</button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      } @empty {
+        <div class="no-comments">Нет комментариев</div>
+      }
+    }
+
+    <div class="add-comment">
+      <textarea 
+        placeholder="Написать комментарий..." 
+        [(ngModel)]="newCommentText"
+        [disabled]="isSubmitting()"
+        (keyup.enter)="addComment()"
+        rows="2"
+      ></textarea>
+      <button 
+        mat-icon-button 
+        (click)="addComment()" 
+        [disabled]="!newCommentText.trim() || isSubmitting()"
+        class="submit-button"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

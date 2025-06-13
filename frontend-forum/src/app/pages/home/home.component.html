@@ -1,0 +1,54 @@
+<div class="home-container">
+  <app-sidebar class="sidebar" [categories]="categories()" [selectedCategoryId]="currentCategory()"
+    (categorySelected)="onCategorySelected($event)">
+  </app-sidebar>
+  <main class="main-content">
+    <div class="create-post">
+      <textarea class="post-input" [(ngModel)]="newPostContent" placeholder="Что у вас нового?" rows="4"></textarea>
+
+      @if (selectedFiles().length > 0) {
+        <div class="selected-files">
+          @for (file of selectedFiles(); track file.name) {
+            <div class="file-preview">
+              @if (mediaService.isImageFile(file)) {
+                <img [src]="getFilePreview(file)" alt="Preview">
+              } @else if (mediaService.isVideoFile(file)) {
+                <video [src]="getFilePreview(file)" controls></video>
+              }
+              <button mat-icon-button (click)="removeFile($index)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="post-actions">
+        <input type="file" #fileInput (change)="onFileSelected($event)" multiple accept="image/*,video/*" style="display: none">
+        <button mat-icon-button (click)="fileInput.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <button class="submit-button" [disabled]="!newPostContent && selectedFiles().length === 0" (click)="createPost()">
+          <mat-icon>send</mat-icon>
+          <span>Опубликовать</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="posts-list">
+      @if (isLoading()) {
+        <div class="loading-spinner">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      } @else {
+        @for (post of posts(); track post.id) {
+          <app-post [post]="post"></app-post>
+        } @empty {
+          <div class="no-posts">
+            Нет постов для отображения
+          </div>
+        }
+      }
+    </div>
+  </main>
+</div>

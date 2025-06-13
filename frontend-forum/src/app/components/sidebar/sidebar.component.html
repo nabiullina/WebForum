@@ -1,0 +1,17 @@
+<nav class="sidebar">
+  <mat-nav-list>
+    <h3 class="sidebar-title">Категории</h3>
+
+    <mat-list-item
+      *ngFor="let category of categories"
+      [class.active]="category.id === selectedCategoryId"
+      (click)="selectCategory(category.id)"
+    >
+      <mat-icon matListItemIcon *ngIf="category.icon">{{category.icon}}</mat-icon>
+      <span matListItemTitle>{{category.name}}</span>
+      <span matListItemLine *ngIf="category.count" class="count">
+            {{category.count}}
+          </span>
+    </mat-list-item>
+  </mat-nav-list>
+</nav>

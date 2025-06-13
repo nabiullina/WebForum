@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-sequence-id
+      author: nabiulliina
+      changes:
+        - addAutoIncrement:
+            tableName: post
+            columnName: id
+            columnDataType: BIGINT
+            incrementBy: 1

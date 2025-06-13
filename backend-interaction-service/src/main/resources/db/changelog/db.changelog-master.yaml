@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/20250329-1-create-like.yaml
+
+  - include:
+      file: db/changelog/changeset/20250329-2-create-comment.yaml
+
+  - include:
+      file: db/changelog/changeset/20250329-3-add-createdat-comment.yaml
+
+  - include:
+      file: db/changelog/changeset/20250329-4-rename-table-like.yaml
+
+  - include:
+      file: db/changelog/changeset/20250329-5-add-constraint-likes.yaml
+
+  - include:
+      file: db/changelog/changeset/20250329-6-drop-constraint-likes.yaml

@@ -1,0 +1,173 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: forum
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  keycloak-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    ports:
+      - "5433:5432"
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME:
+      KC_DB_PASSWORD:
+      KEYCLOAK_ADMIN:
+      KEYCLOAK_ADMIN_PASSWORD:
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_PROXY: edge
+    ports:
+      - "8080:8080"
+    command: start-dev
+    depends_on:
+      - keycloak-db
+    networks:
+      - microservices-network
+
+  service-discovery:
+    build: ./service-discovery
+    ports:
+      - "8761:8761"
+    depends_on:
+      - postgres
+    hostname: service-discovery
+    networks:
+      - microservices-network
+
+  gateway:
+    build: ./api-gateway
+    ports:
+      - "8090:8090"
+    environment:
+      - SERVER_PORT=8090
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/realms/nabiullina
+      - EUREKA_SERVICE_URL=http://service-discovery:8761/eureka/
+    depends_on:
+      - service-discovery
+    networks:
+      - microservices-network
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER:
+      MINIO_ROOT_PASSWORD:
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - microservices-network
+
+  backend-user-service:
+    build: ./backend-user-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/realms/nabiullina
+      - EUREKA_SERVICE_URL=http://service-discovery:8761/eureka/
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/forum
+      - POSTGRES_USERNAME=
+      - POSTGRES_PASSWORD=
+      - S3_ACCESS_KEY=
+      - S3_SECRET_KEY=
+      - S3_URL=http://minio:9000
+      - S3_BUCKET=forum
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_MASTER_REALM=
+      - KEYCLOAK_MASTER_CLIENT_ID=
+      - KEYCLOAK_MASTER_USERNAME=
+      - KEYCLOAK_MASTER_PASSWORD=
+    depends_on:
+      - service-discovery
+      - postgres
+      - keycloak
+    networks:
+      - microservices-network
+
+  backend-post-service:
+    build: ./backend-post-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SERVER_PORT=8084
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/realms/nabiullina
+      - EUREKA_SERVICE_URL=http://service-discovery:8761/eureka/
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/forum
+      - POSTGRES_USERNAME=
+      - POSTGRES_PASSWORD=
+      - S3_ACCESS_KEY=
+      - S3_SECRET_KEY=
+      - S3_URL=http://minio:9000
+      - S3_BUCKET=forum
+    depends_on:
+      - postgres
+      - minio
+      - service-discovery
+      - keycloak
+    networks:
+      - microservices-network
+
+  backend-interaction-service:
+    build: ./backend-interaction-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SERVER_PORT=8085
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/realms/nabiullina
+      - EUREKA_SERVICE_URL=http://service-discovery:8761/eureka/
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/forum
+      - POSTGRES_USERNAME=
+      - POSTGRES_PASSWORD=
+    depends_on:
+      - postgres
+      - service-discovery
+      - keycloak
+    networks:
+      - microservices-network
+
+  frontend:
+    build: ./frontend-forum
+    ports:
+      - "4200:4200"
+    depends_on:
+      - gateway
+      - backend-user-service
+      - backend-post-service
+      - backend-interaction-service
+      - keycloak
+    networks:
+      - microservices-network
+
+volumes:
+  postgres_data:
+  minio_data:
+  keycloak_data: 
+
+networks:
+  microservices-network:
+    driver: bridge

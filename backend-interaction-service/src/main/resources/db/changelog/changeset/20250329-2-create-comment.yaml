@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-comment
+      author: nabiulliina
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: post_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: text
+                  type: text
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            constraintName: fk_comment_user
+            baseTableName: comment
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: user_id
+            onDelete: cascade
+            onUpdate: cascade
+
+        - addForeignKeyConstraint:
+            constraintName: fk_comment_post
+            baseTableName: comment
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE

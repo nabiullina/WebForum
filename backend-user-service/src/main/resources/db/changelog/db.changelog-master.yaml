@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/20250304-1-create-users.yaml
+
+  - include:
+      file: db/changelog/changeset/20250305-1-create-relations.yaml
+
+  - include:
+      file: db/changelog/changeset/20250305-2-update-relations-foreign-key.yaml
+
+  - include:
+      file: db/changelog/changeset/20250305-3-add-primary-key-relations.yaml
+
+  - include:
+      file: db/changelog/changeset/20250306-1-rename-user-table.yaml
+
+  - include:
+        file: db/changelog/changeset/20250325-1-add-user-id.yaml
+
+  - include:
+        file: db/changelog/changeset/20250325-2-add-user-id-constraint.yaml
+
+  - include:
+      file: db/changelog/changeset/20250515-1-add-email.yaml

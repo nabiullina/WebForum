@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-constraint-likes
+      author: nabiulliina
+      changes:
+        - dropUniqueConstraint:
+            tableName: likes
+            constraintName: pk_like_user_post
+            uniqueColumns: user_id, post_id
+        - addColumn:
+            tableName: likes
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

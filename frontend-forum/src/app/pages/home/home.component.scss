@@ -1,0 +1,192 @@
+.home-container {
+    display: grid;
+    grid-template-columns: 320px 1fr 300px;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  }
+  
+  .main-content {
+    .create-post {
+      background: var(--post-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+  
+      .post-input {
+        width: 100%;
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        margin-bottom: var(--spacing-md);
+        transition: all var(--transition-fast);
+        resize: vertical;
+        min-height: 100px;
+  
+        &:focus {
+          outline: none;
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px var(--input-focus);
+        }
+  
+        &::placeholder {
+          color: var(--text-muted);
+        }
+      }
+  
+      .post-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--spacing-md);
+      }
+  
+      .formatting-tools {
+        display: flex;
+        gap: var(--spacing-sm);
+  
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: var(--spacing-sm);
+          color: var(--text-muted);
+          background: var(--input-bg);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-md);
+          transition: all var(--transition-fast);
+  
+          &:hover {
+            color: var(--accent);
+            background: var(--hover-bg);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+          }
+  
+          mat-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+  
+      .submit-button {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm) var(--spacing-lg);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: var(--radius-md);
+        font-family: var(--font-family);
+        font-weight: 500;
+        transition: all var(--transition-fast);
+  
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--card-hover-shadow);
+        }
+  
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  
+  .profile-sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  
+    .trending-topics {
+      background: var(--post-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--card-shadow);
+  
+      h3 {
+        margin-top: 0;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-family: var(--font-family);
+      }
+  
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+  
+        li {
+          margin-bottom: var(--spacing-sm);
+  
+          a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+  
+            &:hover {
+              color: var(--primary);
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .selected-files {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+  }
+
+  .file-preview {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--bg-primary);
+
+    img, video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }

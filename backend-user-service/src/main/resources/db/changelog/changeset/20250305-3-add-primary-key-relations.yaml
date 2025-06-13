@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-primary-key-relations
+      author: nabiulliina
+      changes:
+        - dropUniqueConstraint:
+            tableName: relation
+            constraintName: relations_pkey
+            uniqueColumns: user_id, follower_id
+        - addColumn:
+            tableName: relation
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false

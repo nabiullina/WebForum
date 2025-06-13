@@ -1,0 +1,89 @@
+<div class="profile-edit-container">
+  <div class="navigation">
+    <button mat-button [routerLink]="['/profile', user?.userId]">
+      <mat-icon>arrow_back</mat-icon>
+      Назад к профилю
+    </button>
+  </div>
+
+  <mat-card class="profile-edit-card">
+    <mat-card-header>
+      <mat-card-title>Редактирование профиля</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="avatar-section">
+        <img 
+          [src]="getAvatarUrl()" 
+          alt="Аватар" 
+          class="avatar"
+        >
+        <div class="avatar-actions">
+          <button 
+            mat-stroked-button 
+            color="primary" 
+            (click)="triggerFileInput()"
+            [disabled]="isUploading"
+          >
+            <mat-icon>photo_camera</mat-icon>
+            {{isUploading ? 'Загрузка...' : 'Изменить фото'}}
+          </button>
+          <input 
+            type="file" 
+            #fileInput 
+            (change)="onFileSelected($event)" 
+            accept="image/*" 
+            hidden
+          >
+        </div>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Никнейм</mat-label>
+          <input matInput formControlName="nickname" required>
+          <mat-icon matSuffix>alternate_email</mat-icon>
+          <mat-error *ngIf="profileForm.get('nickname')?.hasError('required')">
+            Никнейм обязателен
+          </mat-error>
+          <mat-error *ngIf="profileForm.get('nickname')?.hasError('minlength')">
+            Минимум 3 символа
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+            Введите корректный email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>О себе</mat-label>
+          <textarea matInput formControlName="bio" rows="3"></textarea>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button 
+            mat-stroked-button 
+            type="button" 
+            [routerLink]="['/profile']"
+          >
+            Отмена
+          </button>
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="profileForm.invalid || isLoading"
+          >
+            <span *ngIf="!isLoading">Сохранить изменения</span>
+            <mat-spinner diameter="24" *ngIf="isLoading"></mat-spinner>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

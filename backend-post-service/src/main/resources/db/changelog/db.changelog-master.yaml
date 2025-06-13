@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/20250323-1-create-post.yaml
+
+  - include:
+      file: db/changelog/changeset/20250324-1-rename-table-posts.yaml
+
+  - include:
+      file: db/changelog/changeset/20250325-1-change-table-reference.yaml
+
+  - include:
+      file: db/changelog/changeset/20250325-2-add-id-sequence.yaml
+
+  - include:
+      file: db/changelog/changeset/20250414-1-add-categories.yaml
+
+  - include:
+      file: db/changelog/changeset/20250529-1-create-post-media.yaml

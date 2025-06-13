@@ -1,0 +1,52 @@
+$color-white: #ffffff;
+$color-black: #000000;
+
+$secondary-color: #f5f7fa;
+$accent-color: #ff4081;
+$light-text: #777777;
+$error-color: #f44336;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$info-color: #2196f3;
+
+$primary-color: #1976d2;
+$primary-light: lighten($primary-color, 10%);
+$primary-dark: darken($primary-color, 10%);
+
+$text-color: #333333;
+$text-light: #777777; 
+$text-muted: #999999;
+$text-on-primary: $color-white;
+
+$background-light: #f5f7fa;
+$background-dark: #2d2d2d;
+
+$border-color: #e0e0e0;
+$border-light: #eeeeee;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-round: 50%;
+$border-radius-pill: 999px !default;
+
+$shadow-sm: 0 1px 3px rgba($color-black, 0.12);
+$shadow-md: 0 4px 6px rgba($color-black, 0.1);
+$shadow-lg: 0 10px 15px rgba($color-black, 0.1);
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+$font-family-base: 'Roboto', sans-serif;
+$font-family-mono: 'Fira Code', monospace;
+$font-size-base: 16px;
+$font-size-sm: 0.875rem; // 14px
+$font-size-lg: 1.25rem; // 20px
+
+$transition-fast: 0.15s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;

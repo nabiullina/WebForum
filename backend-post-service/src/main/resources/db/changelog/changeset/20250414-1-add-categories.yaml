@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create categories
+      author: nabiulliina
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: post
+            columns:
+              - column:
+                  name: category_id
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: post
+            referencedTableName: category
+            baseColumnNames: category_id
+            referencedColumnNames: id
+            constraintName: fl_category_id
+

@@ -1,0 +1,86 @@
+<div class="post">
+  <div class="post-header">
+    <div class="author-avatar">
+      <img 
+        [src]="getAvatarUrl(postState()?.author?.userId!)"
+        [alt]="postState()?.author?.nickname"
+        (click)="selectUser(postState()?.author!)"
+      >
+    </div>
+    <div class="author-info">
+      <h4 (click)="selectUser(postState()?.author!)">{{postState()?.author?.nickname}}</h4>
+      <span class="post-date">{{postState()?.createdAt | date:'medium'}}</span>
+    </div>
+  </div>
+
+  <div class="post-content">
+    <markdown [data]="postState()?.content"></markdown>
+    
+    @if (postState()?.mediaUrls?.length) {
+      <div class="post-media">
+        @for (mediaUrl of postState()?.mediaUrls; track mediaUrl) {
+          @if (isImageUrl(mediaUrl)) {
+            <div class="media-container">
+              <img 
+                [src]="getMediaUrl(mediaUrl)" 
+                alt="Post image" 
+                (click)="openMediaPreview(mediaUrl)"
+                (error)="handleMediaError($event)"
+                loading="lazy"
+              >
+            </div>
+          } @else if (isVideoUrl(mediaUrl)) {
+            <div class="media-container">
+              <video 
+                controls 
+                [src]="getMediaUrl(mediaUrl)" 
+                (error)="handleMediaError($event)"
+                loading="lazy"
+                preload="metadata"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+
+  <div class="post-footer">
+    <button mat-icon-button (click)="toggleLike(postState()?.id!)">
+      <mat-icon>{{postState()?.currentUserLiked ? 'favorite' : 'favorite_border'}}</mat-icon>
+      <span>{{postState()?.likes || 0}}</span>
+    </button>
+    <button mat-icon-button (click)="toggleComments()">
+      <mat-icon>comment</mat-icon>
+      <span>{{postState()?.comments || 0}}</span>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    @if (isAuthor()) {
+      <button mat-icon-button (click)="toggleEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    }
+  </div>
+
+  @if (isEditing()) {
+    <div class="edit-form">
+      <textarea [(ngModel)]="editContent" rows="4" placeholder="Edit your post..."></textarea>
+      <div class="edit-actions">
+        <button mat-button (click)="cancelEdit()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="saveEdit()">Save</button>
+      </div>
+    </div>
+  }
+
+  @if (showComments && postState()) {
+    <app-comment-section 
+      [postId]="postState()!.id" 
+      (userSelected)="selectUser($event)"
+      (commentAdded)="onCommentAdded($event)"
+    ></app-comment-section>
+  }
+</div>

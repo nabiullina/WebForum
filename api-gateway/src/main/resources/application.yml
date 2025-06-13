@@ -1,0 +1,41 @@
+server:
+  port: ${SERVER_PORT:8090}
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: backend-user-service
+          uri: lb://backend-user-service
+          predicates:
+            - Path=/backend-user-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: backend-post-service
+          uri: lb://backend-post-service
+          predicates:
+            - Path=/backend-post-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: backend-interaction-service
+          uri: lb://backend-interaction-service
+          predicates:
+            - Path=/backend-interaction-service/**
+          filters:
+            - StripPrefix=1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL}
+  instance:
+    prefer-ip-address: true

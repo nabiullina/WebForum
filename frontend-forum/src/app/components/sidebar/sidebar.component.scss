@@ -1,0 +1,73 @@
+@use '../../../../public/styles/variables' as *;
+
+.sidebar {
+  background: transparent;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 24px 0;
+  color: #fff;
+
+  .sidebar-title {
+    padding: 0 24px 12px;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  mat-list-item {
+    cursor: pointer;
+    height: 44px;
+    padding: 0 24px;
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+    border: 1.5px solid transparent;
+
+    &:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    &.active {
+      color: #1976d2;
+      border: 1.5px solid #1976d2;
+      background: transparent;
+    }
+
+    mat-icon {
+      margin-right: 12px;
+      color: #bdbdbd;
+    }
+
+    .count {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 12px;
+      margin-left: 8px;
+    }
+  }
+
+  .sidebar-footer {
+    padding: var(--spacing-md) var(--spacing-lg) 0;
+    margin-top: auto;
+
+    .create-post-btn {
+      width: 100%;
+      border-style: dashed;
+      border-color: var(--border-color);
+      color: var(--text-primary);
+      transition: all var(--transition-fast);
+
+      &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--hover-bg);
+      }
+
+      mat-icon {
+        margin-right: var(--spacing-sm);
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @mixin card-shadow {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  
+    &:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  @mixin text-ellipsis($lines: 1) {
+    @if $lines == 1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    } @else {
+      display: -webkit-box;
+      -webkit-line-clamp: $lines;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  
+  @mixin mobile {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }

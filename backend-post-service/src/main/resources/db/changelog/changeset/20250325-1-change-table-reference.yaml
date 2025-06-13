@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: change-table-reference
+      author: nabiulliina
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: post
+            referencedTableName: users
+            baseColumnNames: author_id
+            referencedColumnNames: user_id
+            constraintName: fk_author_id_user_id

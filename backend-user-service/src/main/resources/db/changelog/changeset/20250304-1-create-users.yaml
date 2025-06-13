@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users
+      author: nabiulliina
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nickname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: bio
+                  type: varchar(250)
+
+

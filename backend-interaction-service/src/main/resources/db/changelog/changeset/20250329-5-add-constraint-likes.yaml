@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-constraint-likes
+      author: nabiulliina
+      changes:
+        - modifyDataType:
+            tableName: likes
+            columnName: id
+            newDataType: bigint
+
+        - dropPrimaryKey:
+            tableName: likes
+        - dropColumn:
+            tableName: likes
+            columnName: id
+        - addPrimaryKey:
+            tableName: likes
+            columnNames: user_id, post_id
+            constraintName: pk_like_user_post

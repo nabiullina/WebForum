@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-relations-foreign-key
+      author: nabiulliina
+      changes:
+        - addForeignKeyConstraint:
+            constraintName: fk_relation_user_followerid
+            baseTableName: relations
+            referencedTableName: user
+            baseColumnNames: follower_id
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_relation_user_userid
+            baseTableName: relations
+            referencedTableName: user
+            baseColumnNames: user_id
+            referencedColumnNames: id
+
+        - renameTable:
+            oldTableName: relations
+            newTableName: relation

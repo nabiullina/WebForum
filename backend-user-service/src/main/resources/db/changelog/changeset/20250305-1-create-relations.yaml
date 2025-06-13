@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-relations
+      author: nabiulliina
+      changes:
+        - createTable:
+            tableName: relations
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: follower_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+
+              - column:
+                  name: status
+                  type: varchar(15)

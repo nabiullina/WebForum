@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-createdat-comment
+      author: nabiulliina
+      changes:
+        - addColumn:
+            tableName: comment
+            columns:
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false

@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-user-id-constraint
+      author: nabiulliina
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: user_id

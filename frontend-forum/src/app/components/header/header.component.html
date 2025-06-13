@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <span>DevForum</span>
+    <span class="spacer"></span>
+    @if (authService.isAuthenticated()) {
+    <button mat-icon-button [routerLink]="['/profile']">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    }
+    <button *ngIf="!authService.isAuthenticated()" mat-button routerLink="/login">
+        <mat-icon>login</mat-icon> Войти
+    </button>
+    <button *ngIf="authService.isAuthenticated()" mat-button (click)="logout()">
+        <mat-icon>logout</mat-icon> Выйти
+    </button>
+</mat-toolbar>

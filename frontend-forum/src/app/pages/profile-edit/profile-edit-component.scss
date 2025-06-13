@@ -1,0 +1,52 @@
+@use '../../assets/styles/variables' as *;
+@use '../../assets/styles/mixins' as *;
+
+.profile-edit-container {
+  padding: $spacing-xl;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-edit-card {
+  padding: $spacing-xl;
+
+  .avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: $spacing-xl;
+
+    img {
+      margin-bottom: $spacing-md;
+    }
+
+    .avatar-actions {
+      display: flex;
+      gap: $spacing-md;
+    }
+  }
+
+  h3 {
+    margin: $spacing-xl 0 $spacing-md 0;
+    color: $primary-color;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    margin-top: $spacing-xl;
+  }
+
+  @include mobile {
+    padding: $spacing-md;
+
+    .avatar-section {
+      flex-direction: column;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+  }
+}

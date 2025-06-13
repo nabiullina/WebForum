@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-post-media
+      author: nabiulliina
+      changes:
+        - createTable:
+            tableName: post_media
+            columns:
+              - column:
+                  name: post_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_post_media_post
+                    references: post(id)
+                    onDelete: CASCADE
+              - column:
+                  name: media_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false 

@@ -1,0 +1,47 @@
+<div class="profile-container">
+  <div class="navigation">
+    <button mat-button [routerLink]="['/']">
+      <mat-icon>arrow_back</mat-icon>
+      На главную
+    </button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else if (user()) {
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar-container">
+          <img
+            [src]="getAvatarUrl(user()?.userId!)"
+            alt="Profile avatar"
+            class="avatar"
+          >
+        </div>
+        <div class="profile-info">
+          <h1>
+            {{ user()?.nickname }}
+          </h1>
+          <div class="profile-meta">
+            <mat-icon>email</mat-icon>
+            <span>{{ user()?.email || 'Нет email' }}</span>
+          </div>
+          <div class="profile-meta">
+            <mat-icon>info</mat-icon>
+            <span class="bio">{{ user()?.bio || 'Нет описания' }}</span>
+          </div>
+            <button mat-raised-button color="primary" [routerLink]="['/profile/edit']">
+              <mat-icon>edit</mat-icon>
+              Редактировать профиль
+            </button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="error-message">
+      <p>Не удалось загрузить профиль. Попробуйте позже.</p>
+    </div>
+  }
+</div>
